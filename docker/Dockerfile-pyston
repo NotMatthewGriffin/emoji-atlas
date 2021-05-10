@@ -1,0 +1,7 @@
+FROM ubuntu:18.04
+RUN apt update && apt install -y curl && curl -Lo pyston_2.2_18.04.deb https://github.com/pyston/pyston/releases/download/pyston_2.2/pyston_2.2_18.04.deb
+RUN apt install -y ./pyston_2.2_18.04.deb
+RUN pip-pyston install slack-bolt vaderSentiment
+COPY db.py emoji_atlas.py views.py app/
+WORKDIR app
+ENTRYPOINT pyston emoji_atlas.py
